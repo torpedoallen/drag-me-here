@@ -6,11 +6,14 @@ import magic
 import Image
 import urllib
 import cropresize
+import MySQLdb
+
 from random import choice
 from string import digits
 from string import ascii_uppercase
 from string import ascii_lowercase
 from datetime import datetime
+from contextlib import closing
 
 from flask import abort
 from flask import Flask
@@ -340,5 +343,17 @@ def s(symlink):
     return redirect(pasteFile.url_p)
 
 
+
+def connect_db():
+    return MySQLdb.connect("localhost","root","","p")
+
+
+def init_db():
+    with closing(connect_db()) as db:
+        with app.open_resource('databases/schema.sql', mode='r') as f:
+            db.cursor().execute(f.read())
+        db.commit()
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
+    #init_db()

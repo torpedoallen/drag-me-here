@@ -16,3 +16,4 @@ markdown2==2.1.0
 pyScss==1.1.5
 python-magic==0.4.3
 stylus==0.1.0
+MySQL-python
